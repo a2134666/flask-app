@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" style="display: grid;">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        <title>109年度前瞻基礎建設校園智慧網路改善計畫</title>
+</head>
+
+<body>
+    <nav class="StyledNav">
+        <a href="/"><img class="NavImage" src="/static/Images/toij_Text.png" alt=""></a>
+        <span style="margin-left: 5%;" class='NavSpan'>109年度前瞻基礎建設校園智慧網路改善計畫</span>
+    </nav>
+    <!-- <div id='loginbutton' class="loginBodyStyle background-div">
+        <div  class="loginCard pulse" type="button" onclick='swapView()'>
+            <div class='styledSvgHeader'>帳號密碼登入</div>
+            <svg class='styledSvg' aria-hidden="true" focusable="false" data-prefix="fas" data-icon="key" role="img"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                <path fill="currentColor"
+                    d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z">
+                </path>
+            </svg> 
+        </div>
+    </div> -->
+
+    <div class="background-div2" >
+    <div class='card-container' style="width: 35%;" >
+        <div class="modal-header">
+            <h5 class="modal-title">帳號密碼登入</h5>
+            <!-- <button type="button" class="close" onclick='swapView()'>
+                <span aria-hidden="true">&times;</span>
+            </button> -->
+        </div>
+        <div class="modal-body">
+            <form name='login' id='form' method="post">
+                <div class="form-group">
+                    <input name='username' id='username' type="text" class="form-control" placeholder="帳號" required="required">
+                </div>
+                <div class="form-group">
+                    <input name='password' id="password" type="password" class="form-control" placeholder="密碼" required="required">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      {% for message in messages %}
+                        <p style="color: red">{{ message }}</p>
+                      {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                
+            </form>
+            <div class="modal-footer">
+                <button onclick="document.getElementById('form').submit()" name='submit' class="top-margin-onwhite">登入</button>
+            </div>        
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

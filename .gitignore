@@ -1,0 +1,8 @@
+__pycache__
+moniter_app/__pycache__
+moniter_app/initial
+moniter_app/static/Images
+moniter_app/static/favicon.ico
+moniter_app/uploads
+moniter_app/*sqlite*
+moniter_app/csvExtract.py

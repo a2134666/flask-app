@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" style="display: grid;">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        <title>109年度前瞻基礎建設校園智慧網路改善計畫</title>
+</head>
+
+<body class="background-div">
+    <nav class="StyledNav">
+        <a href="/"><img class="NavImage" src="/static/Images/toij_Text.png" alt=""></a>
+        <span class='NavSpan'>109年度前瞻基礎建設校園智慧網路改善計畫</span>
+    </nav>
+    <div class="card-container">
+    <div id="schinfo" class="mschfont">{{school.name}}</div>
+    <div class="row ml-4 mr-4 mt-5 mb-4 row">
+        <table class="table table-hover mb-0 table-dashboard text-center">
+            <thead class="text-900" >
+                <tr >
+                    <th>
+                    </th>
+                    <th>
+                        場勘需求日期
+                    </th>
+                    <th>
+                        進場施作日期
+                    </th>
+                    <th>
+                        設備點收日期
+                    </th>
+                    <th>
+                        施作初驗日期
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>預計:</td>
+                    {% for key, value in progress.items() %}
+                        <td>{{ value["expectedDate"] }}</td> 
+                    {% endfor %}
+                    <!-- <td>
+                        2020/04/30
+                    </td> -->
+                </tr>
+                <tr>
+
+                    <td>完成:</td>
+                    {% for key, value in progress.items() %}
+                        <td>{{ value["actualDate"] }}</td> 
+                    {% endfor %}
+                    <!-- <td>
+                        2020/04/30
+                    </td>
+                    <td>
+                        2020/04/30
+                    </td>
+                    <td>
+                        2020/04/30
+                    </td>
+                    <td>
+                        2020/04/30
+                    </td>
+                    <td>108/06/15</td> -->
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <img id='check1' src='/static/Images/checkbox.png' class='styledCheckbox'>
+                    </td>
+                    <td>
+                        <img id='check2' src='/static/Images/checkbox.png' class='styledCheckbox'>
+                    </td>
+                    <td>
+                        <img id='check3' src='/static/Images/checkbox.png' class='styledCheckbox'>
+                    </td>
+                    <td>
+                        <img id='check4' src='/static/Images/checkbox.png' class='styledCheckbox'>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    {% for key, value in progress.items() %}
+                        <td>
+                          <a href='school_{{school.id}}/{{key}}' style="color:blue" data-tooltip="{{value['remarks']}}">詳細資訊</a>
+                        </td>
+                    {% endfor %}
+                    <!-- <td>
+                        <a href="javascript:window.location.href+='/location';" style="color:blue" data-tooltip="I’m the tooltip text.">詳細資訊</a>
+                    </td>
+                    <td>
+                        <a href="javascript:window.location.href+='/construction';" style="color:blue" data-tooltip="I’m the tooltip text.">詳細資訊</a>
+                    </td>
+                    <td>
+                        <a href="javascript:window.location.href+='/inventory';" style="color:blue" data-tooltip="I’m the tooltip text.">詳細資訊</a>
+                    </td>
+                    <td>
+                        <a href="javascript:window.location.href+='/completed';" style="color:blue" data-tooltip="I’m the tooltip text.">詳細資訊</a>
+                    </td>
+                    <td>
+                        <a href="javascript:window.location.href+='/acceptance';" style="color:blue" data-tooltip="I’m the tooltip text.">詳細資訊</a>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class='card-container'>
+
+    <div class="mschfont">
+            校園窗口聯絡資訊
+    </div>
+    <div class="row ml-4 mr-4 mt-5 mb-4 row">
+        <table class="table table-hover mb-0 table-dashboard text-center">
+            <tbody>
+                <tr>
+
+                    <td style="width:25%;text-align:right">行政區:</td>
+                    <td style="width:25%;text-align:left"><input id="cityarea" class="top-margin-onwhite" type="text" value="{{school.district}}" disabled></td>
+                    <td style="width:25%;text-align:right">地址:</td>
+                    <td style="width:25%;text-align:left"><input id="schaddr" class="top-margin-onwhite" type="text" value="{{school.address}}" {{change_flag}}></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">
+                        資訊組窗口:
+                    </td>
+                    <td style="text-align:left"><input id="infoName" class="top-margin-onwhite" type="text" value="{{school.infoGroupName}}" {{change_flag}}></td>
+                    <td style="text-align:right">
+                        資訊組電話:
+                    </td>
+                    <td style="text-align:left"><input id="infophone" class="top-margin-onwhite" type="text" value="{{school.infoGroupPhone}}" {{change_flag}}></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">
+                        總務組窗口:
+                    </td>
+                    <td style="text-align:left"><input id="gafName" class="top-margin-onwhite" type="text" value="{{school.generalAffairsName}}" {{change_flag}}></td>
+                    <td style="text-align:right">
+                        總務組電話:
+                    </td>
+                    <td style="text-align:left"><input id="gafphone" class="top-margin-onwhite" type="text" value="{{school.generalAffairsPhone}}" {{change_flag}}></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">
+                        代理人窗口:
+                    </td>
+                    <td style="text-align:left"><input id="agentName" class="top-margin-onwhite" type="text" value="{{school.agentName}}" {{change_flag}}>
+                        </td>
+                    <td style="text-align:right">
+                        代理人電話:
+                    </td>
+                    <td style="text-align:left"><input id="agentphone" class="top-margin-onwhite" type="text" value="{{school.agentPhone}}" {{change_flag}}>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">
+                        工班總窗口:
+                    </td>
+                    <td style="text-align:left"><input id="workName" class="top-margin-onwhite" type="text" value="簡基益" disabled>
+                    </td>
+                    <td style="text-align:right">
+                        工班總窗口電話:
+                    </td>
+                    <td style="text-align:left"><input id="workphone" class="top-margin-onwhite" type="text" value="0931137581" disabled>
+                     </td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">
+                        專案總窗口:
+                    </td>
+                    <td style="text-align:left"><input id="work1Name" class="top-margin-onwhite" type="text" value="謝昀芳" disabled>
+                    </td>
+                    <td style="text-align:right">
+                        專案總窗口電話:
+                    </td>
+                    <td style="text-align:left"><input id="work1phone" class="top-margin-onwhite" type="text" value="0918950103" disabled>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td style="text-align:right">
+                        工班二窗口:
+                    </td>
+                    <td style="text-align:left"><input id="work2Name" class="top-margin-onwhite" type="text" value="{{school.workerTwoName}}">
+                       </td>
+                    <td style="text-align:right">
+                        工班二電話:
+                    </td>
+                    <td style="text-align:left"><input id="work2phone" class="top-margin-onwhite" type="text" value="{{school.workerTwoPhone}}">
+                        </td>
+                </tr> -->
+                <tr>
+                    <td style="text-align:right">
+                        一次輸入:
+                    </td>
+                    <td style="text-align:left">
+                    <input id="csvFill" class="top-margin-onwhite" type="text" value="" {{change_flag}}>&nbsp;&nbsp;
+                    <input class='top-margin-onwhite' type="button" value="填入" onclick="setTableData()">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-hover mb-0 table-dashboard text-center">
+            <tbody>
+                <tr>
+                    <td style="width:25%;text-align:right">
+                        <input class='top-margin-onwhite' id="inpUndo" type="button" value="返回"
+                            onclick="javascript:window.location.assign('/')">
+                        &nbsp;&nbsp;<input class='top-margin-onwhite' id="inpOk" type="button" value="儲存"
+                            onclick="dataSave()" {% if change_flag == "disabled" %} hidden {% endif %}>
+                    </td>
+                    <td style="width:75%;text-align:right"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <script>
+    function setTableData(){
+      var input = $("#csvFill").val().split(",");
+      var fields = ["#schaddr", "#infoName", "#infophone", "#gafName", "#gafphone", "#agentName", "#agentphone"]//, "#workName", "#workphone", "#work1Name", "#work1phone", "#work2Name", "#work2phone"]
+      
+      for(var i=0; i<Math.min(fields.length, input.length); ++i){
+        $(fields[i]).val(input[i].trim());
+      }
+    }
+    function getTableData(){
+      return {"address":$("#schaddr").val(), "infoGroupName":$("#infoName").val(), "infoGroupPhone":$("#infophone").val(), "generalAffairsName":$("#gafName").val(), "generalAffairsPhone":$("#gafphone").val(), "agentName":$("#agentName").val(), "agentPhone":$("#agentphone").val()}//, "workerLeaderName":$("#workName").val(), "workerLeaderPhone":$("#workphone").val(), "workerOneName":$("#work1Name").val(), "workerOnePhone":$("#work1phone").val(), "workerTwoName":$("#work2Name").val(), "workerTwoPhone":$("#work2phone").val()}
+    }
+    var initialTableData = getTableData();
+    
+    function dataSave(){
+      var tableData = getTableData();
+      let save = false;
+      
+      for(var i in tableData){
+        if(tableData[i] && initialTableData[i] && initialTableData[i] != tableData[i]){
+          save = true;
+        }
+      }
+      
+      if(save){
+        $.ajax({url:"", type:"POST", dataType:"json", contentType: "application/json;charset=utf-8",
+        data:JSON.stringify({"target":["schools"], data:tableData}),
+        success:function(data, textStatus){
+          //console.log(data);
+          if(data["state"]) alert("儲存成功");
+          else{
+              console.log(data);
+              alert("儲存失敗");
+          }
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown){
+          console.log(textStatus + errorThrown);
+          return false;
+        }});
+      }
+    }
+    
+    $(function(){
+      $.ajax({url:"", type:"POST", dataType:"json", contentType: "application/json;charset=utf-8",
+      data:JSON.stringify({"target":["progress"]}),
+      success:function(data, textStatus){
+        //console.log(data);
+        var type = ["location", "construction", "inventory", "completed"]//, "acceptance"]
+        for(var i=0; i<5; ++i){
+          if(data[type[i]] == 0){
+            $("#check"+(i+1)).prop("src","/static/Images/undone.png");
+          }
+        }
+      },
+      error:function(XMLHttpRequest, textStatus, errorThrown){
+        console.log(textStatus + errorThrown);
+        return false;
+      }});
+    });
+    </script>
+</body>
+
+</html>

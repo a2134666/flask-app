@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" style="display: grid;">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>109年度前瞻基礎建設校園智慧網路改善計畫</title>
+</head>
+
+<body class="background-div">
+    <nav class="StyledNav">
+        <a href="/"><img class="NavImage" src="/static/Images/toij_Text.png" alt=""></a>
+        <span class='NavSpan'>109年度前瞻基礎建設校園智慧網路改善計畫</span>
+    </nav>
+    <main class="col-15 col-md-13 col-xl-13 py-md-s background-div card-container">
+        <div class="mschfont">{{school.name}} >> 進場施作</div>
+        <div class="row ml-4 mr-4 mt-5 mb-4 row">
+            <table class="table table-hover mb-0 table-dashboard text-center">
+                <tbody>
+                    <tr>
+                        <td style="width:25%;text-align:right">預計施作日期:</td>
+                        <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="dateexpect"
+                                type="date" {{change_flag}}></td>
+                    </tr>
+                    <!-- <tr>
+                        <td style="width:25%;text-align:right">施作驗收日期:</td>
+                        <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="dateconfirm" type="date"></td>
+                    </tr> -->
+                    <tr>
+                        <td style="width:25%;text-align:right">施作計劃書上傳:</td>
+                        <td style="width:75%;text-align:left">
+                            <input type="file" id="uploadtick" class='top-margin-onwhite' {{change_flag}}>
+                            &nbsp;&nbsp;<a class='top-margin-onwhite' onclick="uploadFile('uploadtick','doc')">上傳</a><br>
+                            <a class='top-margin-onwhite' id="doc" onclick="downloadFile('doc')">下載</a>
+                            <span id='downFile_doc'><span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;text-align:right">實際施作日期:</td>
+                        <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="datereal"
+                                type="date" {{change_flag}}></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;text-align:right">施作過程註記:</td>
+                        <td style="width:75%;text-align:left"><textarea id="txtRemark" cols="50" rows="5" {{change_flag}}></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mschfont" style="margin:15px 0px">施工照片上傳</div>
+            <!--<div class="container">
+                <a class="btn-menu jq-btn-menu" href="javascript:void(0)"><span></span></a>
+                <a class="img-container" href="System-List.html">
+                    <img class="img" src="" alt="">
+                </a>-->
+                <table class="table table-hover mb-0 table-dashboard text-center">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;text-align:right">施工前:</td>
+                            <td style="width:75%;text-align:left">
+                              <input type="file" id="uploadbeforeimg" class='top-margin-onwhite' {{change_flag}}>
+                              &nbsp;&nbsp;<a class='top-margin-onwhite' onclick="uploadFile('uploadbeforeimg','before')">上傳</a><br>
+                              <a class='top-margin-onwhite' id="before" onclick="downloadFile('before')">下載</a>
+                              <span id='downFile_before'><span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <table class="table table-hover mb-0 table-dashboard text-center">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;text-align:right">施工中:</td>
+                            <td style="width:75%;text-align:left">
+                              <input type="file" id="uploadingimg" class='top-margin-onwhite'>
+                              &nbsp;&nbsp;<a class='top-margin-onwhite' onclick="uploadFile('uploadingimg','ing')">上傳</a><br>
+                              <a class='top-margin-onwhite' id="ing" onclick="downloadFile('ing')">下載</a>
+                              <span id='downFile_ing'><span>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+                <table class="table table-hover mb-0 table-dashboard text-center">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;text-align:right">施工後:</td>
+                            <td style="width:75%;text-align:left">
+                              <input type="file" id="uploadafterimg" class='top-margin-onwhite' {{change_flag}}>
+                              &nbsp;&nbsp;<a class='top-margin-onwhite' onclick="uploadFile('uploadafterimg','after')">上傳</a><br>
+                              <a class='top-margin-onwhite' id="after" onclick="downloadFile('after')">下載</a>
+                              <span id='downFile_after'><span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-hover mb-0 table-dashboard text-center">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;text-align:right">
+                                <input class='top-margin-onwhite' id="inpUndo" type="button" value="返回"
+                                    onclick="history.back()">
+                                &nbsp;&nbsp;<input class='top-margin-onwhite' id="inpOk" onclick="dataSave()"
+                                    type="button" value="儲存" {% if change_flag == "disabled" %} hidden {% endif %}>
+                            </td>
+                            <td style="width:75%;text-align:right"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            <!-- </div> -->
+        </div>
+    </main>
+
+    <script>
+        /*const input = document.getElementById('uploadtick');
+        const input1 = document.getElementById('uploadbeforeimg');
+        const input2 = document.getElementById('uploadingimg');
+        const input3 = document.getElementById('uploadafterimg');
+        
+        const link = document.getElementById('inpDown');
+        const link1 = document.getElementById('inpDown1');
+        const link2 = document.getElementById('inpDown2');
+        const link3 = document.getElementById('inpDown3');
+        let objectURL;
+        let objectURL1;
+        let objectURL2;
+        let objectURL3;
+        console.log(this.files)
+        input.addEventListener('change', function () {
+            if (objectURL) {
+                // revoke the old object url to avoid using more memory than needed
+                URL.revokeObjectURL(objectURL);
+            }
+            const file = this.files[0];
+            objectURL = URL.createObjectURL(file);
+            link.download = file.name; // this name is used when the user downloads the file
+            link.href = objectURL;
+        });
+        input1.addEventListener('change', function () {
+            if (objectURL1) {
+                // revoke the old object url to avoid using more memory than needed
+                URL.revokeObjectURL(objectURL1);
+            }
+            const file = this.files[0];
+            objectURL1 = URL.createObjectURL(file);
+            link1.download = file.name; // this name is used when the user downloads the file
+            link1.href = objectURL1;
+        });
+        input2.addEventListener('change', function () {
+            if (objectURL2) {
+                // revoke the old object url to avoid using more memory than needed
+                URL.revokeObjectURL(objectURL2);
+            }
+            const file = this.files[0];
+            objectURL2 = URL.createObjectURL(file);
+            link2.download = file.name; // this name is used when the user downloads the file
+            link2.href = objectURL2;
+        });
+        input3.addEventListener('change', function () {
+            if (objectURL3) {
+                // revoke the old object url to avoid using more memory than needed
+                URL.revokeObjectURL(objectURL3);
+            }
+            const file = this.files[0];
+            
+            objectURL3 = URL.createObjectURL(file);
+            link3.download = file.name; // this name is used when the user downloads the file
+            link3.href = objectURL3;
+        });*/
+
+        var dataGet;
+        $(function () {
+            $.ajax({
+                url: "", type: "POST",
+                success: function (data, textStatus) {
+                    // for download and compare difference
+                    dataGet = data;
+                    if ("expectedDate" in data && data["expectedDate"]) $("#dateexpect").val(data["expectedDate"]);
+                    //if("confirmDate" in data && data["confirmDate"]) $("#dateconfirm").val(data["confirmDate"]);
+                    if ("actualDate" in data && data["actualDate"]) $("#datereal").val(data["actualDate"]);
+                    if ("remarks" in data && data["remarks"]) $("#txtRemark").text(data["remarks"]);
+                    if ("lastFile" in data && data["lastFile"]){
+                      var lastFile = JSON.parse(data["lastFile"]);
+                      for(key in lastFile){
+                        $("#downFile_"+key).text(lastFile[key]);
+                      }
+                    }
+                    //console.log(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(textStatus + errorThrown);
+                    return false;
+                }
+            });
+        })
+
+        function dataSave() {
+            let save = false;
+            /*let filenames = {};
+            
+            // update files
+            let form = new FormData();
+            let upload = false;
+            if($("#uploadtick").prop("files").length){
+              //let file = $("#uploadtick").prop("files")[0];
+              form.append("doc", $("#uploadtick").prop("files")[0]);
+              upload = true;
+            }
+            if($("#uploadbeforeimg").prop("files").length){
+              form.append("before", $("#uploadbeforeimg").prop("files")[0]);
+              upload = true;
+            }
+            if($("#uploadingimg").prop("files").length){
+              form.append("ing", $("#uploadingimg").prop("files")[0]);
+              upload = true;
+            }
+            if($("#uploadafterimg").prop("files").length){
+              form.append("after", $("#uploadafterimg").prop("files")[0]);
+              upload = true;
+            }
+            
+            if(upload){
+              $.ajax({url:"", type:"POST", processData:false, contentType:false, data:form, async:false,
+              success:function(data, textStatus){
+                if(data && "state" in data && data["state"]){
+                  filenames = data["filenames"];
+                  save = true;
+                  //console.log(filenames);
+                }
+              },
+              error:function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(textStatus + errorThrown);
+                return false;
+              }});
+            }*/
+            
+            // update database
+            if (dataGet) {
+                var exDate = $("#dateexpect").val();
+                //var coDate = $("#dateconfirm").val();
+                var reDate = $("#datereal").val();
+                var remark = $("#txtRemark").val();
+                if (exDate && dataGet["expectedDate"] != exDate) save = true;
+                //if(coDate && dataGet["confirmDate"] != coDate) save = true;
+                if (reDate && dataGet["actualDate"] != reDate) save = true;
+                if (remark && dataGet["remarks"] != remark) save = true;
+            }
+
+            if (save) {
+                $.ajax({
+                    url: "", type: "POST", dataType: "json", contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ "target": ["progress"], "expectedDate": exDate, "actualDate": reDate, "remarks": remark}),
+                    success: function (data, textStatus) {
+                        //console.log(data);
+                        if(data["state"]){
+                          var dirs = window.location.pathname.split("/");
+                          dirs.pop();
+                          window.location = dirs.join("/");
+                        }
+                        else{
+                          console.log(data);
+                          alert("儲存失敗");
+                        } 
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(textStatus + errorThrown);
+                        return false;
+                    }
+                });
+            }
+        }
+        function uploadFile(id, type){
+          if($("#"+id).prop("files").length){
+            let file = $("#"+id).prop("files")[0];
+            let form = new FormData();
+            form.append(type, file);
+            
+            $.ajax({url:"", type:"POST", processData:false, contentType:false, data:form,
+            success:function(data, textStatus){
+              //console.log(data);
+              if(data["state"]){
+                $("#downFile_"+type).text(data["filenames"][type]);
+                $("#"+id).val("");
+              }
+              else{
+                console.log(data);
+                alert("儲存失敗");
+              }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+              console.log(textStatus + errorThrown);
+              return false;
+            }});
+          }
+        }
+        function downloadFile(type){
+          if($("#downFile_"+type).text()) window.open("/uploads/"+window.location.pathname.split("/")[2]+"/"+$("#downFile_"+type).text())//window.location = "/uploads/"+window.location.pathname.split("/")[2]+"/"+$("#downFile_"+type).text();
+        }
+    // var date = new Date();
+    // var currentDate = date.toISOString().slice(0, 10);
+    // document.getElementById('dateexpect').value = currentDate;
+    // document.getElementById('datereal').value = currentDate;
+    // document.getElementById('dateconfirm').value = currentDate;
+
+    </script>
+</body>
+
+</html>

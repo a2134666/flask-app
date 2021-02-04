@@ -1,0 +1,534 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+  background-color: #18abbe;
+}
+.StyledNav{
+background-color: #18abbe;
+display: flex;
+align-items: center;
+height: 90px;
+}
+
+.NavImage{
+cursor: pointer;
+vertical-align: middle;
+border-style: none;
+position: absolute;
+width: 40%;
+right: 0;
+top: 0;
+/* border-bottom-left-radius: 8px; */
+}
+@media (min-width: 900px){
+.NavSpan{ 
+margin-left: 3%;
+font-size: 30px;
+display: inline-flex;
+flex-direction: row;
+font-family: sans-serif;
+color: #FFF;
+  width: 600px;
+}
+}
+@media (max-width: 900px){
+  .NavSpan{
+    font-size: 20px;
+    margin-left: 3%;
+    display: inline-flex;
+    flex-direction: row;
+    font-family: sans-serif;
+   color: #FFF;    
+  width: auto;
+}
+}
+
+.loginBodyStyle{
+display: flex;
+justify-content: center;
+align-content: center;
+text-align: center;
+width: 100%;
+padding-top: 100px;
+color: #0f6e7a;
+background-color: white;
+}
+
+.loginCard{
+  border-radius: 8px;
+  display: table-column;
+flex-direction: column;
+justify-content: center;
+align-content: center;
+text-align: center;
+margin: auto;
+max-width: 23%;
+width: 100%;
+position: relative;
+height: auto;
+color: #0f6e7a;
+background-color: white;
+box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+}
+
+.loginCard:hover{
+  color: #FFF;
+  background-color: #128291;
+}
+
+.styledSvgHeader{
+  font-size: 36px;
+  pointer-events: none;
+  font-weight: 600;
+  text-align: center !important;
+  display: block;
+  padding: 15px;
+}
+
+.styledSvg{
+font-size: 7.5rem;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+top: 30%;
+width: 1em;
+overflow: visible;
+margin-top: 4rem !important;
+}
+
+@media (min-width: 900px){
+.CardDiv{
+  display: flex;
+width: 100%;
+height: 100%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+}
+
+@media (max-width: 900px){
+  .CardDiv{
+    display: flex;
+  width: 100%;
+  height: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+}
+
+@media (min-width: 900px){
+.pieChartDiv{
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+background-color: #FFF;
+justify-content: center;
+align-items: center;
+padding: 1%;
+color: #0f6e7a;
+box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+width: 25%;
+height: 100%;
+margin-left: 1%;
+margin-right: 1%;
+}
+}
+@media (max-width: 900px){
+  .pieChartDiv{
+    border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF;
+  justify-content: center;
+  align-items: center;
+  padding: 3%;
+  color: #0f6e7a;
+  box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+}
+
+.pieChartDiv:hover {
+  background-color: #128291;
+  color: white;
+}
+
+
+@media (max-width: 900px){
+  canvas{
+    margin-bottom: 30px;
+  }
+}
+
+.doughnutChartTitle{
+font-size: 25px;
+text-align: center;
+font-weight: 800;
+}
+
+.barGraph{
+border-radius: 8px;
+padding-right: 3px;
+margin-top: 30px;
+display: flex;
+flex-direction: column;
+background-color: #FFF;
+width: 94%;
+margin: auto;
+box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+}
+
+.smschFont{
+  font-size: medium;
+  width: 200px;
+  text-align: right;
+}
+
+.mschfont{
+  margin-top: 15px;
+  margin-left: 15px;
+  font-size: x-large;
+    width: 300px;
+}
+
+.marginedDiv{
+  /* margin-top: 200px; */
+  text-align: center;
+  /* background-image: url("../Images/wave.png"); */
+  width: 100%;
+  /* height: 100%; */
+}
+
+.top-margin{
+  color: #0f6e7a; 
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+  box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+    -webkit-animation-duration: 1.25s;
+          animation-duration: 1.25s;
+}
+
+.top-margin:hover{
+  background-color: #128291;
+  color: white;
+  }
+
+tspan{
+  font: bold 14px sans-serif; 
+  fill: black;
+  cursor: pointer;
+}
+
+.background-div{
+  background-color: #18abbe;
+}
+
+@keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+            transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+            transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+            transform: scale3d(.97, .97, .97);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceIn {
+  -webkit-animation-name: bounceIn;
+          animation-name: bounceIn;
+  -webkit-animation-duration: .75s;
+          animation-duration: .75s;
+}
+
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+            transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+            transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse {
+  -webkit-animation-name: pulse;
+          animation-name: pulse;
+          animation-iteration-count: infinite;
+          animation-duration: 2s;
+}
+@-webkit-keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+}
+.white-text{
+  color: #FFF !important;
+}
+
+.card-container{
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF;
+  padding: 3px;
+  margin: 30px;
+  border-radius: 8px;
+  box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+    -webkit-animation-duration: 1.25s;
+          animation-duration: 1.25s;
+}
+
+.top-border{
+  border-top: 1px solid #dee2e6;
+  width: 100%;
+  padding-top: 5px;
+}
+
+.top-margin-onwhite{
+  cursor: pointer;
+  color: #000; 
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+  box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+    -webkit-animation-duration: 1.25s;
+          animation-duration: 1.25s;
+}
+
+.background-div2{
+  background-color: #18abbe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styledCheckbox{
+  pointer-events:none;
+  width: 25px;
+  height: 25px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  display: inline-block;
+    border-radius: .25rem;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+    -webkit-animation-duration: 2.5s;
+          animation-duration: 2.5s;
+}
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}

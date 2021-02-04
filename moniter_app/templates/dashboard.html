@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" style="display: grid;">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="/static/css/index.css">
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <title>109年度前瞻基礎建設校園智慧網路改善計畫</title>
+</head>
+
+<body class="background-div">
+  <nav class="StyledNav">  
+    <span class='NavSpan'>109年度前瞻基礎建設校園智慧網路改善計畫</span>
+    <a href="/"><img class="NavImage" src="/static/Images/toij_Text.png" alt=""></a>
+    </nav>
+  <div class="background-div">
+    <div class='CardDiv bounceIn'>
+      <div class="pieChartDiv">
+        <div class="doughnutChartTitle">場勘需求進度</div>
+        <canvas id="myChart1"></canvas>
+      </div>
+      <div class="pieChartDiv">
+        <div class="doughnutChartTitle">學校施作進度</div>
+        <canvas id="myChart2"></canvas>
+      </div>
+    </div>
+    <div class='CardDiv bounceIn'>
+      <div class="pieChartDiv">
+        <div class="doughnutChartTitle">設備點收進度</div>
+        <canvas id="myChart3"></canvas>
+      </div>
+      <div class="pieChartDiv">
+        <div class="doughnutChartTitle">初驗完成進度</div>
+        <canvas id="myChart4"></canvas>
+      </div>
+    </div>
+    <div class='marginedDiv'>
+      <ul class="ul_inline" style="list-style-type: none;">
+        <li class="clear-both pad2">
+          {% for district in districts %}
+          <button class="top-margin" onclick="DistFilter('{{district}}');">{{district}}</button>
+          {% endfor %}
+          <!-- <button class="top-margin" onclick="DistFilter('八德區');">八德區</button>
+          <button class="top-margin" onclick="DistFilter('大園區');">大園區</button>
+          <button class="top-margin" onclick="DistFilter('大溪區');">大溪區</button>
+          <button class="top-margin" onclick="DistFilter('中壢區');">中壢區</button>
+          <button class="top-margin" onclick="DistFilter('平鎮區');">平鎮區</button>
+          <button class="top-margin" onclick="DistFilter('桃園區');">桃園區</button>
+          <button class="top-margin" onclick="DistFilter('新屋區');">新屋區</button>
+          <button class="top-margin" onclick="DistFilter('楊梅區');">楊梅區</button>
+          <button class="top-margin" onclick="DistFilter('龍潭區');">龍潭區</button>
+          <button class="top-margin" onclick="DistFilter('龜山區');">龜山區</button>
+          <button class="top-margin" onclick="DistFilter('蘆竹區');">蘆竹區</button>
+          <button class="top-margin" onclick="DistFilter('觀音區');">觀音區</button> -->
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="barGraph">
+    <div id="chart"></div>
+  </div>
+  <br><br>
+
+<script>
+// initial bar chart
+/*var options = {
+  chart: {
+      type: 'bar',
+  },
+  dataLabels: {
+      enabled: false
+  },
+  series: []
+}
+var chart = new ApexCharts(document.querySelector("#chart"), options);*/
+var chart;
+
+function pieToBar(finished, stage){
+  $.ajax({url:"dashboard_data", type:"POST", data:{"type":"pieList", "finished":finished, "stage":stage},
+  success:function(data, textStatus){
+    //console.log(data);
+    if(data && "schools" in data && "progress" in data){
+      // extract progress data
+      var bar_data = {"location":new Array(data["schools"].length).fill(0), "construction":new Array(data["schools"].length).fill(0), "inventory":new Array(data["schools"].length).fill(0), "completed":new Array(data["schools"].length).fill(0)}//, "acceptance":new Array(data["schools"].length).fill(0)}
+      var bar_data_index = 0, id = 0;
+      for(var i=0; i<data["progress"].length; ++i){
+        if(data["progress"][i][0] != id){
+          id = data["progress"][i][0];
+          while(parseInt(data["schools"][bar_data_index].substr(0,3)) != id){
+            bar_data_index++;
+          }
+        }
+        bar_data[data["progress"][i][2]][bar_data_index] = data["progress"][i][3];
+      }
+      //console.log(bar_data);
+      
+      stageMapping = {"location":"場勘需求進度", "construction":"學校施作進度", "inventory":"設備點收進度", "completed":"初驗完成進度"};
+      finishedMapping = ['未完成', '完成'];
+      options = {
+        series: [{
+          name: '場勘',
+          data: bar_data["location"]
+        }, {
+          name: '施作',
+          data: bar_data["construction"]
+        }, {
+          name: '設備',
+          data: bar_data["inventory"]
+        }, {
+          name: '初驗',
+          data: bar_data["completed"]
+        }],
+        chart: {
+          type: 'bar',
+          height: data["schools"].length*30 + 100,
+          stacked: true/*,
+          events: {
+            //click event will pull the clicked targets text
+            //can use this to handle setting the routing with some javascript
+            click: function (event, xaxisLabels, config) {
+              let school_id = parseInt(event.target.innerHTML.substr(0,3));
+              if(!Number.isNaN(school_id)){
+                window.location = "/info/school_"+school_id;
+              }
+            }
+          }*/
+        },
+        title: {
+          text: stageMapping[stage] + " >> " + finishedMapping[finished]
+        },
+        xaxis: {
+          labels: {
+            show: false,
+          },
+          tickAmount: 4,
+          max: 4,
+          categories: data["schools"]
+        }
+      };
+      chart.updateOptions(options);
+    }
+  },
+  error:function(XMLHttpRequest, textStatus, errorThrown){
+    console.log(textStatus + errorThrown);
+    return false;
+  }});
+}
+
+$(function(){
+  // for pie chart
+  var ctx1 = document.getElementById('myChart1').getContext('2d');
+  var ctx2 = document.getElementById('myChart2').getContext('2d');
+  var ctx3 = document.getElementById('myChart3').getContext('2d');
+  var ctx4 = document.getElementById('myChart4').getContext('2d');
+  //var ctx5 = document.getElementById('myChart5').getContext('2d');
+  
+  /*var pie_options = {
+    'onClick': function (evt, item) {
+      let identifier = item[0]._options.backgroundColor;
+      if (identifier == '#1f935e') {
+        pieToBar();
+        //console.log('未完成')
+      } else if (identifier == '#d2332c') {
+        pieToBar();
+        console.log('完成')
+      }
+    },
+    legend: {
+      display: true,
+      labels: {
+        fontColor: 'black'
+      }
+    }
+  };*/
+  
+  $.ajax({url:"dashboard_data", type:"POST", data:{"type":"progress"},
+	success:function(data, textStatus){
+    //console.log(data);
+    
+    if(data && "progress" in data){
+      var chart1 = new Chart(ctx1, {type: 'pie', data: {
+        labels: ['未完成', '完成'],
+        datasets: [{
+          label: '場勘需求進度',
+          backgroundColor: ['#1f935e', '#d2332c'],
+          borderColor: '#1f935e',
+          data: [115-data["progress"]["location"], data["progress"]["location"]]
+        }]
+      }, options: {
+        'onClick': function (evt, item) {
+          let identifier = item[0]._options.backgroundColor;
+          if (identifier == '#1f935e') {
+            pieToBar(0, "location");
+            //console.log('未完成')
+          } else if (identifier == '#d2332c') {
+            pieToBar(1, "location");
+            //console.log('完成')
+          }
+        },
+        legend: {
+          display: true,
+          labels: {
+            fontColor: 'black'
+          }
+        }
+      }});
+      
+      var chart2 = new Chart(ctx2, {type: 'pie', data: {
+        labels: ['未完成', '完成'],
+        datasets: [{
+          label: '學校施作進度',
+          backgroundColor: ['#1f935e', '#d2332c'],
+          borderColor: '#1f935e',
+          data: [115-data["progress"]["construction"], data["progress"]["construction"]]
+        }]
+      }, options: {
+        'onClick': function (evt, item) {
+          let identifier = item[0]._options.backgroundColor;
+          if (identifier == '#1f935e') {
+            pieToBar(0, "construction");
+            //console.log('未完成')
+          } else if (identifier == '#d2332c') {
+            pieToBar(1, "construction");
+            //console.log('完成')
+          }
+        },
+        legend: {
+          display: true,
+          labels: {
+            fontColor: 'black'
+          }
+        }
+      }});
+      
+      var chart3 = new Chart(ctx3, {type: 'pie', data: {
+        labels: ['未完成', '完成'],
+        datasets: [{
+          label: '設備點收進度',
+          backgroundColor: ['#1f935e', '#d2332c'],
+          borderColor: '#1f935e',
+          data: [115-data["progress"]["inventory"], data["progress"]["inventory"]]
+        }]
+      }, options: {
+        'onClick': function (evt, item) {
+          let identifier = item[0]._options.backgroundColor;
+          if (identifier == '#1f935e') {
+            pieToBar(0, "inventory");
+            //console.log('未完成')
+          } else if (identifier == '#d2332c') {
+            pieToBar(1, "inventory");
+            //console.log('完成')
+          }
+        },
+        legend: {
+          display: true,
+          labels: {
+            fontColor: 'black'
+          }
+        }
+      }});
+    
+      var chart4 = new Chart(ctx4, {type: 'pie', data: {
+        labels: ['未完成', '完成'],
+        datasets: [{
+          label: '初驗完成進度',
+          backgroundColor: ['#1f935e', '#d2332c'],
+          borderColor: '#1f935e',
+          data: [115-data["progress"]["completed"], data["progress"]["completed"]]
+        }]
+      }, options: {
+        'onClick': function (evt, item) {
+          let identifier = item[0]._options.backgroundColor;
+          if (identifier == '#1f935e') {
+            pieToBar(0, "completed");
+            //console.log('未完成')
+          } else if (identifier == '#d2332c') {
+            pieToBar(1, "completed");
+            //console.log('完成')
+          }
+        },
+        legend: {
+          display: true,
+          labels: {
+            fontColor: 'black'
+          }
+        }
+      }});
+      
+      /*var chart5 = new Chart(ctx5, {type: 'pie', data: {
+        labels: ['未完成', '完成'],
+        datasets: [{
+          label: '總驗完成進度',
+          backgroundColor: ['#1f935e', '#d2332c'],
+          borderColor: '#1f935e',
+          data: [115-data["progress"]["acceptance"], data["progress"]["acceptance"]]
+        }]
+      }, options: pie_options});*/
+    }
+	},
+	error:function(XMLHttpRequest, textStatus, errorThrown){
+		console.log(textStatus + errorThrown);
+		return false;
+	}});
+  
+  // for bar chart
+  $.ajax({url:"dashboard_data", type:"POST", data:{"type":"schools", "district":"桃園區"},
+	success:function(data, textStatus){
+    //console.log(data);
+    
+    if(data && "schools" in data && "progress" in data){
+      // extract progress data
+      var start_id = parseInt(data["schools"][0].substr(0,3));
+      var bar_data = {"location":new Array(data["schools"].length).fill(0), "construction":new Array(data["schools"].length).fill(0), "inventory":new Array(data["schools"].length).fill(0), "completed":new Array(data["schools"].length).fill(0)}//, "acceptance":new Array(data["schools"].length).fill(0)}
+      for(var i=0; i<data["progress"].length; ++i){
+        bar_data[data["progress"][i][2]][data["progress"][i][0]-start_id] = data["progress"][i][3];
+      }
+      
+      options = {
+        series: [{
+          name: '場勘',
+          data: bar_data["location"]
+          //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+        }, {
+          name: '施作',
+          data: bar_data["construction"]
+          //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+        }, {
+          name: '設備',
+          data: bar_data["inventory"]
+          //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }, {
+          name: '初驗',
+          data: bar_data["completed"]
+          //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }/*, {
+          name: '總驗',
+          data: bar_data["acceptance"]
+          //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }*/],
+        chart: {
+          type: 'bar',
+          height: data["schools"].length*30 + 100,//3000,
+          stacked: true,
+          //stackType: '5',
+          events: {
+            //click event will pull the clicked targets text
+            //can use this to handle setting the routing with some javascript
+            click: function (event, xaxisLabels, config) {
+              let school_id = parseInt(event.target.innerHTML.substr(0,3));
+              if(!Number.isNaN(school_id)){
+                window.location = "/info/school_"+school_id;
+              }
+              
+              //if (config.globals.labels[0]) {
+              //  alert(event.target);
+              //  console.log(event.target.innerHTML);
+              //}
+            }
+          }
+        },
+        title: {
+          text: "桃園區",
+          offsetX: 20,
+          offsetY: 20,
+          style: {
+            fontSize:  '24px',
+            fontWeight:  'bold'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+          },
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          labels: {
+            show: false,
+          },
+          tickAmount: 4,
+          max: 4,
+          //categories: ["001中興國中", "002福豐國中", "003同德國中", "004會稽國中", "005經國國中", "006中埔國小", "007會稽國小", "008文山國小", "009南門國小", "010北門國小", "011同安國小", "012新明國中", "013龍岡國中", "014大崙國中", "015龍興國中", "016自強國中", "017過嶺國中", "018青埔國中", "019芭里國小", "020中平國小", "021新街國小", "022信義國小", "023普仁國小", "024富台國小", "025內壢國小", "026大崙國小", "027中正國小", "028自立國小", "029內定國小", "030興國國小", "031林森國小", "032興仁國小", "033中原國小", "034平南國中", "035南勢國小", "036宋屋國小", "037新勢國小", "038忠貞國小", "039東勢國小", "040復旦國小", "041北勢國小", "042東安國小", "043祥安國小", "044新榮國小", "045仁美國中", "046富岡國中", "047瑞原國中", "048楊光國中小", "049楊梅國小", "050水美國小", "051上田國小", "052富岡國小", "053瑞埔國小", "054高榮國小", "055四維國小", "056瑞梅國小", "057楊明國小", "058瑞塘國小", "059楊心國小", "060石門國中", "061凌雲國中", "062龍潭國小", "063德龍國小", "064潛龍國小", "065龍源國小", "066武漢國小", "067三坑國小", "068美華國小", "069內柵國小", "070中興國小", "071員樹林國小", "072瑞祥國小", "073僑愛國小", "074南興國小", "075永福國小", "076田心國小", "077八德國中", "078永豐高中國中部", "079大成國小", "080大勇國小", "081茄苳國小", "082廣興國小", "083大岡國中", "084迴龍國中小", "085壽山國小", "086福源國小", "087大埔國小", "088大坑國小", "089山頂國小", "090新路國小", "091樂善國小", "092幸福國小", "093楓樹國小", "094南美國小", "095山腳國中", "096蘆竹國小", "097公埔國小", "098新興國小", "099外社國小", "100頂社國小", "101海湖國小", "102錦興國小", "103山腳國小", "104大華國小", "105新莊國小", "106光明國小", "107龍安國小", "108大園國小", "109內海國小", "110埔心國小", "111觀音國中", "112觀音國小", "113新坡國小", "114頭洲國小", "115埔頂國小"],
+          categories: data["schools"]
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val
+            },
+            followCursor: true,
+          }
+        },
+        fill: {
+          opacity: 1
+
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'center',
+          fontSize: '18px;'
+        },
+        grid: {
+          padding: {
+            left: 30,
+            right: 30
+          }
+        }
+      };
+    }
+    
+    chart = new ApexCharts(document.querySelector("#chart"), options);
+    //chart.updateOptions(options);
+    chart.render();
+    
+	},
+	error:function(XMLHttpRequest, textStatus, errorThrown){
+		console.log(textStatus + errorThrown);
+		return false;
+	}});
+});
+
+const DistFilter = (district) => {
+  // for bar chart
+  $.ajax({url:"dashboard_data", type:"POST", data:{"type":"schools", "district":district},
+	success:function(data, textStatus){
+    //console.log(data);
+    
+    if(data && "schools" in data && "progress" in data){
+      // extract progress data
+      var start_id = parseInt(data["schools"][0].substr(0,3));
+      var bar_data = {"location":new Array(data["schools"].length).fill(0), "construction":new Array(data["schools"].length).fill(0), "inventory":new Array(data["schools"].length).fill(0), "completed":new Array(data["schools"].length).fill(0)}//, "acceptance":new Array(data["schools"].length).fill(0)}
+      for(var i=0; i<data["progress"].length; ++i){
+        bar_data[data["progress"][i][2]][data["progress"][i][0]-start_id] = data["progress"][i][3];
+      }
+      
+      options = {
+        series: [{
+          name: '場勘',
+          data: bar_data["location"]
+        }, {
+          name: '施作',
+          data: bar_data["construction"]
+        }, {
+          name: '設備',
+          data: bar_data["inventory"]
+        }, {
+          name: '初驗',
+          data: bar_data["completed"]
+        }],
+        chart: {
+          type: 'bar',
+          height: data["schools"].length*30 + 100,
+          stacked: true,
+          events: {
+            //click event will pull the clicked targets text
+            //can use this to handle setting the routing with some javascript
+            click: function (event, xaxisLabels, config) {
+              let school_id = parseInt(event.target.innerHTML.substr(0,3));
+              if(!Number.isNaN(school_id)){
+                window.location = "/info/school_"+school_id;
+              }
+            }
+          }
+        },
+        title: {
+          text: district,
+          offsetX: 20,
+          offsetY: 20,
+          style: {
+            fontSize:  '24px',
+            fontWeight:  'bold'
+          }
+        },
+        xaxis: {
+          labels: {
+            show: false
+          },
+          tickAmount: 4,
+          max: 4,
+          categories: data["schools"]
+        }
+      };
+    }
+    
+    //var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.updateOptions(options);
+    //chart.render();
+    
+	},
+	error:function(XMLHttpRequest, textStatus, errorThrown){
+		console.log(textStatus + errorThrown);
+		return false;
+	}});
+}
+
+</script>
+</body>
+</html>

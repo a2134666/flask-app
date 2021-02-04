@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" style="display: grid;">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>109年度前瞻基礎建設校園智慧網路改善計畫</title>
+</head>
+
+<body class="background-div">
+    <nav class="StyledNav">
+        <a href="/"><img class="NavImage" src="/static/Images/toij_Text.png" alt=""></a>
+        <span class='NavSpan'>109年度前瞻基礎建設校園智慧網路改善計畫</span>
+    </nav>
+    <main class="col-15 col-md-13 col-xl-13 py-md-s background-div">
+        <div class="card-container">
+            <div class="mschfont">{{school.name}} >> 設備清點</div>
+            <div class="row ml-4 mr-4 mt-5 mb-4 row">
+                <table class="table table-hover mb-0 table-dashboard text-center">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;text-align:right">預計點收日期:</td>
+                            <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="dateexpect"
+                                    type="date" {{change_flag}}></td>
+                        </tr>
+                        <!-- <tr>
+                        <td style="width:25%;text-align:right">點收驗收日期:</td>
+                        <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="dateconfirm" type="date"></td>
+                    </tr> -->
+                        <tr>
+                            <td style="width:25%;text-align:right">點收確認單上傳:</td>
+                            <td style="width:75%;text-align:left">
+                              <input type="file" id="uploadtick" class='top-margin-onwhite' {{change_flag}}>
+                              &nbsp;&nbsp;<a class='top-margin-onwhite' onclick="uploadFile()">上傳</a><br>
+                              <a class='top-margin-onwhite' id="doc" onclick="downloadFile()">下載</a>
+                              <span id='downFile'><span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%;text-align:right">實際點收日期:</td>
+                            <td style="width:75%;text-align:left"><input class='top-margin-onwhite' id="datereal"
+                                    type="date" {{change_flag}}></td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%;text-align:right">備註事項:</td>
+                            <td style="width:75%;text-align:left"><textarea id="txtRemark" cols="50"
+                                    rows="5" {{change_flag}}></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <br />
+                <div class="mschfont" style="margin:15px 0px">點收設備清單</div>
+                <!-- <div class="container">
+                    <a class="btn-menu jq-btn-menu" href="javascript:void(0)"><span></span></a>
+                    <a class="img-container" href="System-List.html">
+                        <img class="img" src="" alt="">
+                    </a> -->
+                    <table class="table table-hover mb-0 table-dashboard text-center">
+                        <tbody>
+                            <tr>
+                                <td style="width:25%;text-align:right">無線基地台:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txtwifi" value="{{inventory[0][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[0][0]}} (總數量)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;text-align:right">24埠全光介面交換器:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txt24porttrans" value="{{inventory[1][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[1][0]}} (總數量)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;text-align:right">24埠POE交換器:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txt24portpoetrans" value="{{inventory[2][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[2][0]}} (總數量)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;text-align:right">10U機櫃:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txt10ucabinet" value="{{inventory[3][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[3][0]}} (總數量)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;text-align:right">42U機櫃:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txt42ucabinet" value="{{inventory[4][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[4][0]}} (總數量)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;text-align:right">光纖收容箱:</td>
+                                <td style="width:75%;text-align:left">
+                                    <input type="text" id="txtfiberbox" value="{{inventory[5][1]}}" {{change_flag}}> &nbsp;&nbsp;/
+                                    {{inventory[5][0]}} (總數量)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover mb-0 table-dashboard text-center">
+                        <tbody>
+                            <tr>
+                                <td style="width:25%;text-align:right">
+                                    <input class='top-margin-onwhite' id="inpUndo" type="button" value="返回"
+                                        onclick="history.back()">
+                                    &nbsp;&nbsp;<input class='top-margin-onwhite' id="inpOk" type="button" value="儲存"
+                                        onclick="dataSave()" {% if change_flag == "disabled" %} hidden {% endif %}>
+                                </td>
+                                <td style="width:75%;text-align:right"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- </div> -->
+            </div>
+    </main>
+
+    <script>
+        /*const input = document.getElementById('uploadtick');
+        const link = document.getElementById('inpDown');
+        let objectURL;
+
+        input.addEventListener('change', function () {
+            if (objectURL) {
+                // revoke the old object url to avoid using more memory than needed
+                URL.revokeObjectURL(objectURL);
+            }
+            const file = this.files[0];
+            objectURL = URL.createObjectURL(file);
+            link.download = file.name; // this name is used when the user downloads the file
+            link.href = objectURL;
+        });*/
+        var dataGet;
+        var countInitial = [];
+        $(function () {
+            countInitial.push($("#txtwifi").val());
+            countInitial.push($("#txt24porttrans").val());
+            countInitial.push($("#txt24portpoetrans").val());
+            countInitial.push($("#txt10ucabinet").val());
+            countInitial.push($("#txt42ucabinet").val());
+            countInitial.push($("#txtfiberbox").val());
+
+            $.ajax({
+                url: "", type: "POST",
+                success: function (data, textStatus) {
+                    // for download and compare difference
+                    dataGet = data;
+                    if ("expectedDate" in data && data["expectedDate"]) $("#dateexpect").val(data["expectedDate"]);
+                    //if("confirmDate" in data && data["confirmDate"]) $("#dateconfirm").val(data["confirmDate"]);
+                    if ("actualDate" in data && data["actualDate"]) $("#datereal").val(data["actualDate"]);
+                    if ("remarks" in data && data["remarks"]) $("#txtRemark").text(data["remarks"]);
+                    if ("lastFile" in data && data["lastFile"]) $("#downFile").text(JSON.parse(data["lastFile"])["doc"]);
+                    //console.log(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(textStatus + errorThrown);
+                    return false;
+                }
+            });
+        })
+
+        function dataSave() {
+            let progress = false;
+            let inventory = false;
+            /*let filenames = [];
+            
+            // update files
+            if($("#uploadtick").prop("files").length){
+              let file = $("#uploadtick").prop("files")[0];
+              let form = new FormData();
+              form.append("doc", file);
+              
+              $.ajax({url:"", type:"POST", processData:false, contentType:false, data:form, async:false,
+              success:function(data, textStatus){
+                if(data && "state" in data && data["state"]){
+                  filenames = data["filenames"];
+                  progress = true;
+                }
+                console.log(data);
+              },
+              error:function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(textStatus + errorThrown);
+                return false;
+              }});
+            }*/
+            
+            // update database
+            if (dataGet) {
+                var exDate = $("#dateexpect").val();
+                //var coDate = $("#dateconfirm").val();
+                var reDate = $("#datereal").val();
+                var remark = $("#txtRemark").val();
+                if (exDate && dataGet["expectedDate"] != exDate) progress = true;
+                //if(coDate && dataGet["confirmDate"] != coDate) save = true;
+                if (reDate && dataGet["actualDate"] != reDate) progress = true;
+                if (remark && dataGet["remarks"] != remark) progress = true;
+
+                var countSave = [];
+                countSave.push($("#txtwifi").val());
+                countSave.push($("#txt24porttrans").val());
+                countSave.push($("#txt24portpoetrans").val());
+                countSave.push($("#txt10ucabinet").val());
+                countSave.push($("#txt42ucabinet").val());
+                countSave.push($("#txtfiberbox").val());
+                for (var i = 0; i < countInitial.length; ++i) {
+                    countSave[i] = parseInt(countSave[i]);
+                    if (parseInt(countInitial[i]) && countSave[i] && parseInt(countInitial[i]) != countSave[i]) inventory = true;
+                    if (Number.isNaN(countSave[i])) {
+                        //alert("設備數量必須輸入數字");
+                        //return false;
+                        countSave[i] = 0;
+                    }
+                }
+            }
+
+            if (progress && inventory) {
+                $.ajax({
+                    url: "", type: "POST", dataType: "json", contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ "target": ["progress", "inventory"], "expectedDate": exDate, "actualDate": reDate, "remarks": remark, "inventory": countSave }),
+                    success: function (data, textStatus) {
+                        //console.log(data);
+                        if(data["state"]){
+                          var dirs = window.location.pathname.split("/");
+                          dirs.pop();
+                          window.location = dirs.join("/");
+                        }
+                        else {
+                            console.log(data);
+                            alert("儲存失敗");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(textStatus + errorThrown);
+                        return false;
+                    }
+                });
+            }
+            else if (progress) {
+                $.ajax({
+                    url: "", type: "POST", dataType: "json", contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ "target": ["progress"], "expectedDate": exDate, "actualDate": reDate, "remarks": remark }),
+                    success: function (data, textStatus) {
+                        //console.log(data);
+                        if(data["state"]){
+                          var dirs = window.location.pathname.split("/");
+                          dirs.pop();
+                          window.location = dirs.join("/");
+                        }
+                        else {
+                            console.log(data);
+                            alert("儲存失敗");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(textStatus + errorThrown);
+                        return false;
+                    }
+                });
+            }
+            else if (inventory) {
+                $.ajax({
+                    url: "", type: "POST", dataType: "json", contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ "target": ["inventory"], "inventory": countSave }),
+                    success: function (data, textStatus) {
+                        //console.log(data);
+                        if(data["state"]){
+                          var dirs = window.location.pathname.split("/");
+                          dirs.pop();
+                          window.location = dirs.join("/");
+                        }
+                        else {
+                            console.log(data);
+                            alert("儲存失敗");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(textStatus + errorThrown);
+                        return false;
+                    }
+                });
+            }
+        }
+        
+        function uploadFile(){
+          if($("#uploadtick").prop("files").length){
+            let file = $("#uploadtick").prop("files")[0];
+            let form = new FormData();
+            form.append("doc", file);
+            
+            $.ajax({url:"", type:"POST", processData:false, contentType:false, data:form,
+            success:function(data, textStatus){
+              //console.log(data);
+              if(data["state"]){
+                $("#downFile").text(data["filenames"]["doc"]);
+                $("#uploadtick").val("");
+              }
+              else{
+                console.log(data);
+                alert("儲存失敗");
+              }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+              console.log(textStatus + errorThrown);
+              return false;
+            }});
+          }
+        }
+        
+        function downloadFile(){
+          if($("#downFile").text()) window.open("/uploads/"+window.location.pathname.split("/")[2]+"/"+$("#downFile").text())//window.location = "/uploads/"+window.location.pathname.split("/")[2]+"/"+$("#downFile").text();
+        }
+    // var date = new Date();
+    // var currentDate = date.toISOString().slice(0, 10);
+    // document.getElementById('dateexpect').value = currentDate;
+    // document.getElementById('datereal').value = currentDate;
+    // document.getElementById('dateconfirm').value = currentDate;
+
+    </script>
+</body>
+
+</html>
